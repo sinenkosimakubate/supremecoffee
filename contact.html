@@ -14,7 +14,7 @@
     }
 
     .overlay {
-      background: rgba(0,0,0,0.6); /* dark overlay for readability */
+      background: rgba(0,0,0,0.6);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -86,7 +86,8 @@
 <body>
 
   <div class="overlay">
-    <form class="order-form" action="submit_form.php" method="POST">
+    <!-- Updated form action to go directly to order-submitted.html -->
+    <form class="order-form" action="order-submitted.html" method="GET">
       <h2>Place Your Order</h2>
 
       <label for="drink">Choose a drink:</label>
@@ -121,4 +122,6 @@
 
 </body>
 </html>
+
+
 
