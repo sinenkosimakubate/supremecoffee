@@ -1,36 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Contact Supreme Coffee</title>
-<link rel="stylesheet" href="style.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Your Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('cappuccino.jpg') no-repeat center center/cover;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
 
+    .overlay {
+      background: rgba(0,0,0,0.6); /* dark overlay for readability */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .order-form {
+      background: rgba(255,255,255,0.95);
+      color: #333;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    .order-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .order-form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    .order-form input, .order-form select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .order-form button {
+      width: 100%;
+      padding: 10px;
+      background: #007BFF;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .order-form button:hover {
+      background: #0056b3;
+    }
+
+    .contact-info {
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .contact-info a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
 <body>
 
-<header>
-<h1>Supreme Coffee</h1>
+  <div class="overlay">
+    <form class="order-form" action="submit_form.php" method="POST">
+      <h2>Place Your Order</h2>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="menu.html">Menu</a>
-<a href="contact.html">Contact</a>
-</nav>
-</header>
+      <label for="drink">Choose a drink:</label>
+      <select id="drink" name="drink" required>
+        <option value="">--Select your drink--</option>
+        <option value="cappuccino">Cappuccino</option>
+        <option value="latte">Latte</option>
+        <option value="espresso">Espresso</option>
+        <option value="americano">Americano</option>
+      </select>
 
-<section class="contact">
+      <label for="quantity">Number of drinks:</label>
+      <input type="number" id="quantity" name="quantity" min="1" required>
 
-<h2>Contact Us</h2>
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required>
 
-<p><strong>Phone:</strong> 476 8930</p>
-<p><strong>Email:</strong> supremecoffee@gmail.com</p>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
 
-</section>
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required>
 
-<footer>
-<p>© Supreme Coffee 2026</p>
-</footer>
+      <button type="submit">Submit Order</button>
+    </form>
+
+    <div class="contact-info">
+      <p>📞 Call us: <a href="tel:+2673768493">+267 376 8493</a></p>
+      <p>✉️ Email: <a href="mailto:supremecoffee@gmail.com">supremecoffee@gmail.com</a></p>
+    </div>
+  </div>
 
 </body>
-
 </html>
+
