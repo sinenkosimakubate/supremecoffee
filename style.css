@@ -1,0 +1,105 @@
+/* General styling */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: #fdfaf6;
+  color: #3e2c23;
+}
+
+header {
+  background-color: #4b2e2e;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero {
+  background: url('images/barista.jpeg') no-repeat center center/cover;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.hero-text {
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #d9a066;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  background: #f3e5d8;
+}
+
+.feature {
+  max-width: 250px;
+  text-align: center;
+}
+
+.menu {
+  padding: 2rem;
+  text-align: center;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.item {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.item img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.contact {
+  padding: 2rem;
+  text-align: center;
+}
+
+footer {
+  background: url('images/coffeecup.jpeg') no-repeat center center/cover;
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+}
