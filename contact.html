@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supreme Coffee - Order</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Supreme Coffee</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+          <li class="nav-item cart-link"><a class="nav-link" href="contact.html">Order Now <span id="cart-badge"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="page-banner">
+  <h1>Place Your Order</h1>
+  <p>Fill in your details and we'll take care of the rest</p>
+</div>
+
+<div class="container" style="padding: 50px 0;">
+  <div class="row g-4 justify-content-center">
+
+    <!-- cart -->
+    <div class="col-lg-4">
+      <div class="cart-panel">
+        <h3>🛒 Your Cart</h3>
+        <div id="cart-items"></div>
+        <div class="cart-total-row">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-amount" id="cart-total">P0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- order form -->
+    <div class="col-lg-7">
+      <div class="order-form-wrap">
+        <h2>Your Details</h2>
+
+        <!-- plain form submit to Formspree, then redirect to order-submitted.html -->
+        <form id="orderForm" action="https://formspree.io/f/mbdwzlar" method="POST">
+          <input type="hidden" name="_next" value="order-submitted.html">
+          <input type="hidden" name="_subject" value="New Order from Supreme Coffee Website">
+          <input type="hidden" name="order_summary" id="hidden-order">
+
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="name" class="form-control" placeholder="e.g. Sinenkosi Makubate" required>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" placeholder="you@email.com" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" name="phone" class="form-control" placeholder="+267 xxxxxxx" required>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Special Instructions / Delivery Address</label>
+            <textarea name="instructions" class="form-control" rows="4" placeholder="Any allergies, special requests, or delivery address..."></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn" class="submit-btn">Submit Order</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>&copy; Supreme Coffee 2026. All Rights Reserved</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+    // shows what's in the cart and the total price
+    function renderCart() {
+        const container = document.getElementById('cart-items');
+        container.innerHTML = '';
+
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="empty-cart-msg"><p>Your cart is empty.</p><p><a href="menu.html">Browse the menu</a> to add items.</p></div>';
+            document.getElementById('cart-total').textContent = 'P0.00';
+            document.getElementById('hidden-order').value = '';
+            return;
+        }
+
+        // count how many of each item are in the cart
+        const counts = {};
+        cart.forEach(function(item) {
+            if (counts[item.name]) {
+                counts[item.name].qty = counts[item.name].qty + 1;
+            } else {
+                counts[item.name] = { price: item.price, qty: 1 };
+            }
+        });
+
+        let total = 0;
+        let summaryText = '';
+
+        Object.keys(counts).forEach(function(name) {
+            const qty = counts[name].qty;
+            const price = counts[name].price;
+            const lineTotal = price * qty;
+            total = total + lineTotal;
+            summaryText = summaryText + name + ' x' + qty + ' - P' + lineTotal.toFixed(2) + '\n';
+
+            container.innerHTML = container.innerHTML +
+                '<div class="cart-item">' +
+                    '<div class="cart-item-name">' + name + ' x' + qty + '</div>' +
+                    '<div>' +
+                        '<span class="cart-item-price">P' + lineTotal.toFixed(2) + '</span> ' +
+                        '<button class="qty-btn" onclick="removeOne(\'' + name + '\')">-</button>' +
+                    '</div>' +
+                '</div>';
+        });
+
+        document.getElementById('cart-total').textContent = 'P' + total.toFixed(2);
+        document.getElementById('hidden-order').value = summaryText;
+    }
+
+    // removes just one copy of an item from the cart
+    function removeOne(name) {
+        for (let i = 0; i < cart.length; i++) {
+            if (cart[i].name === name) {
+                cart.splice(i, 1);
+                break;
+            }
+        }
+        saveCart();
+        renderCart();
+        updateCartBadge();
+    }
+
+    renderCart();
+
+    // stop the form from submitting if the cart is empty
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+        if (cart.length === 0) {
+            e.preventDefault();
+            alert('Your cart is empty! Add items from the menu first.');
+            return;
+        }
+        // once the order goes through, clear the cart
+        localStorage.removeItem('cart');
+    });
+</script>
+</body>
+</html>
